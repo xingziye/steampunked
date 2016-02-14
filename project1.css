@@ -30,3 +30,9 @@ div.game div.cell {
     min-height: 50px;
     min-width: 50px;
 }
+
+div.container{
+    margin-top: 2em;
+    text-align: center;
+
+}
