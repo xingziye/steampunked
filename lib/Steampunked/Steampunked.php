@@ -11,5 +11,11 @@ namespace Steampunked;
 
 class Steampunked
 {
+    /**
+     * Constructor
+     */
+    public function __construct() {
+
+    }
 
 }

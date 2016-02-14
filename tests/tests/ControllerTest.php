@@ -5,10 +5,12 @@
  * @cond 
  * @brief Unit tests for the class 
  */
-class EmptyTest extends \PHPUnit_Framework_TestCase
+require __DIR__ . "/../../vendor/autoload.php";
+
+class ControllerTest extends \PHPUnit_Framework_TestCase
 {
-	public function test1() {
-		//$this->assertEquals($expected, $actual);
+	public function test_construct() {
+
 	}
 }
 
