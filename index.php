@@ -1,67 +1,53 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: xingziye
- * Date: 2/12/16
- * Time: 1:35 PM
+ * User: Santoro
+ * Date: 2/16/16
+ * Time: 11:11 PM
  */
 ?>
+
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Steampunked</title>
     <link href="project1.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
-<div class="container">
 
+<div class="screen">
     <p><img src="images/title.png"></p>
-    <form method="post" action="">
-        <div class="game">
-            <div class="row">
-                <div class="cell"><img src="images/valve-closed.png"></div><div class="cell"><img src="images/straight-h.png"></div><div class="cell"><img src="images/straight-h.png"></div><div class="cell"><img src="images/straight-h.png"></div><div class="cell"><img src="images/ninety-sw.png"></div><div class="cell"><img src="images/gauge-top-0.png"></div>
-            </div>
-            <div class="row">
-                <div class="cell"><img src=""></div><div class="cell"><img src=""></div><div class="cell"><img src=""></div><div class="cell"><img src=""></div><div class="cell"><img src="images/ninety-ne.png"></div><div class="cell"><img src="images/gauge-0.png"></div>
-            </div>
-            <div class="row">
-                <div class="cell"><img src=""></div><div class="cell"><img src=""></div><div class="cell"><img src=""></div><div class="cell"><img src=""></div><div class="cell"><img src=""></div><div class="cell"><img src=""></div>
-            </div>
-            <div class="row">
-                <div class="cell"><img src=""></div><div class="cell"><img src=""></div><div class="cell"><img src=""></div><div class="cell"><img src=""></div><div class="cell"><img src=""></div><div class="cell"><img src="images/gauge-top-0.png"></div>
-            </div>
-            <div class="row">
-                <div class="cell"><img src=""></div><div class="cell"><img src=""></div><div class="cell"><img src=""></div><div class="cell"><img src="images/ninety-es.png"></div><div class="cell"><img src="images/straight-h.png"></div><div class="cell"><img src="images/gauge-0.png"></div>
-            </div>
-            <div class="row">
-                <div class="cell"><img src="images/valve-closed.png"></div><div class="cell"><img src="images/straight-h.png"></div><div class="cell"><img src="images/straight-h.png"></div><div class="cell"><img src="images/ninety-wn.png"></div><div class="cell"><img src=""></div><div class="cell"><img src=""></div>
-            </div>
-        </div>
-        <p class="message">Player 1, you have won!</p>
-        <p class="pieces">
-            <label for="radio1"><img src="images/valve-closed.png" /></label>
-            <input type="radio" name="radio1" id="radio1"
-            <label for="radio2"><img src="images/straight-h.png" /></label>
-            <input type="radio" name="radio2" id="radio2"
-            <label for="radio3"><img src="images/straight-v.png" /></label>
-            <input type="radio" name="radio3" id="radio3"
-            <label for="radio4"><img src="images/straight-h.png" /></label>
-            <input type="radio" name="radio4" id="radio4"
-            <label for="radio5"><img src="images/straight-h.png" /></label>
-            <input type="radio" name="radio5" id="radio5"
-        </p>
-        <div class="options">
-            <p class="option"><input type="button" name="rotate" value="Rotate"></p>
-            <p class="option"><input type="button" name="discard" value="Discard"></p>
-            <p class="option"><input type="button" name="open" value="Open Valve"></p>
-            <p class="option"><input type="button" name="giveup" value="Give Up"></p>
-        </div>
-
+    <form method="post" action="game.php">
+        <fieldset>
+            <legend>Game Preferences</legend>
+            <p>
+                <label for="player1"> Player 1 Name:</label>
+                <input type="text" name="player1" id="player1">
+            </p>
+            <br>
+            <p>
+                <label for="player2"> Player 2 Name:</label>
+                <input type="text" name="player2" id="player2">
+            </p>
+            <br>
+            <p>
+                <label for="6x6">6x6</label>
+                <input type="radio" name="gamesize" id="6x6">
+                <label for="10x10">10x10</label>
+                <input type="radio" name="gamesize" id="10x10">
+                <label for="20x20">20x20</label>
+                <input type="radio" name="gamesize" id="20x20">
+            </p>
+            <br>
+            <p>
+                <input type="submit" >
+            </p>
+        </fieldset>
     </form>
-
-
 </div>
+
+
 
 </body>
 </html>
