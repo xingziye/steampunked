@@ -26,7 +26,7 @@ class Controller
         if($ndx>0){
             return $_POST;
         }
-        else{
+        if ($this->Steampunked->post($ndx)){
             $this->rest=true;
         }
         return;
