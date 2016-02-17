@@ -14,9 +14,55 @@ class Steampunked
     /**
      * Constructor
      */
-    public function __construct() {
+    public function __construct($seed = null)
+    {
+        if ($seed === null) {
+            $seed = time();
+        }
 
+        srand($seed);
     }
 
+    public function createGame($size, $player0, $player1)
+    {
+        $this->size = $size;
+        $this->players = array();
+        $this->players[] = $player0;
+        $this->players[] = $player1;
+    }
 
+    public function getPlayer($ndx)
+    {
+        if ($ndx >= 0 and $ndx < 2) {
+            return $this->players[$ndx];
+        } else {
+            return null;
+        }
+    }
+
+    public function nextTurn()
+    {
+        $this->turn++;
+        $this->turn %= 2;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTurn()
+    {
+        return $this->turn;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSize()
+    {
+        return $this->size;
+    }
+
+    private $size = 0;
+    private $players = array();
+    private $turn = 0;
 }
