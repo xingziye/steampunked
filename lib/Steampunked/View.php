@@ -33,6 +33,13 @@ HTML;
         return $html;
     }
 
+    public function startScreenButtons(){
+        $html = <<<HTML
+
+HTML;
+        return $html;
+    }
+
     public function numRows(){
         return $this->rows;
     }

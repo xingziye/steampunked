@@ -47,6 +47,22 @@ class ViewTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals(5, $num_radio); //assert 5 radio buttons present
 
 	}
+
+	public function test_StartbuttonsPresent()
+	{
+		$steampunked = new Steampunked\Steampunked();
+		$view = new Steampunked\View($steampunked);
+		$html = $view->startScreenButtons();
+		$num_radio = $view->radioButtons();
+
+		$this->assertContains('<input type="radio" name="gamesize" id="6x6">', $html); //6x6
+		$this->assertContains('<input type="radio" name="gamesize" id="10x10">', $html);//10x10
+		$this->assertContains('<input type="radio" name="gamesize" id="20x20">', $html);//20x20
+		$this->assertEquals(3, $num_radio); //assert 5 radio buttons present
+		$this->assertContains('<input type="text" name="player1" id="player1">', $html); // player 1
+		$this->assertContains('<input type="text" name="player2" id="player2">', $html); // player 2
+
+	}
 }
 
 /// @endcond
