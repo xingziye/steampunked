@@ -18,7 +18,7 @@
 
 <div class="screen">
     <p><img src="images/title.png"></p>
-    <form method="post" action="">
+    <form method="post" action="index.php">
         <fieldset>
             <legend>Game Preferences</legend>
             <p>
@@ -33,11 +33,11 @@
             <br>
             <p>
             <label for="6x6">6x6</label>
-            <input type="radio" name="6x6" id="6x6">
+            <input type="radio" name="gamesize" id="6x6">
             <label for="10x10">10x10</label>
-            <input type="radio" name="10x10" id="10x10">
+            <input type="radio" name="gamesize" id="10x10">
             <label for="20x20">20x20</label>
-            <input type="radio" name="20x20" id="20x20">
+            <input type="radio" name="gamesize" id="20x20">
             </p>
             <br>
             <p>
