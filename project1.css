@@ -52,3 +52,18 @@ p.option{
     vertical-align: top;
     padding: 1em;
 }
+
+
+div.screen {
+    text-align: center;
+    margin-top: 1em;
+    margin-left: auto ;
+    margin-right: auto ;
+}
+
+fieldset{
+    margin-top: 2em;
+    margin-left: auto ;
+    margin-right: auto;
+    width: 500px;
+}
