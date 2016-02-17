@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Santoro
- * Date: 2/16/16
- * Time: 11:11 PM
- */
+
 ?>
 
 <!DOCTYPE html>
