@@ -85,10 +85,21 @@ class Steampunked
         $this->size = $size;
     }
 
+    public function gaveUp(){
+
+        $this->gaveup = true;
+    }
+
+    public function getGaveUp(){
+        return $this->gaveup;
+
+    }
+
     private $size = 0;
     private $players = array();
     private $turn = 0;
     private $player1name ="" ;
     private $player2name ="" ;
+    private $gaveup = false;
 
 }

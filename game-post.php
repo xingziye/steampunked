@@ -8,6 +8,5 @@ if($controller->isReset()) {
 }
 
 
-
 header("location: game.php");
 exit;

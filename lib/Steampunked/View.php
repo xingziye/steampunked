@@ -39,7 +39,11 @@ HTML;
             for ($col = 0; $col < $this->size; $col++) {
                 if ($col == 0 and ($row == 0 or $row == $this->size-1)) {
                     $this->html .= "<div class=\"cell\"><img src=\"images/valve-closed.png\"></div>";
-                } else if ($col == $this->size-1 and ($row == 1 or $row == $this->size-2)) {
+                }
+                else if(($row == 0 and $col == $this->size-1) or ($col == $this->size -1 and $row == $this->size-3)){
+                    $this->html .= "<div class=\"cell\"><img src=\"images/gauge-top-0.png\"></div>";
+                }
+                else if ($col == $this->size-1 and ($row == 1 or $row == $this->size-2)) {
                     $this->html .= "<div class=\"cell\"><img src=\"images/gauge-0.png\"></div>";
                 } else {
                     $this->html .= "<div class=\"cell\"><img src=\"\"></div>";
@@ -133,14 +137,23 @@ HTML;
     public function currentPlayer()
     {
 
-        $html = <<<HTML
-        <p class="message"> $this->currentPlayer, your turn!</p>
+        if ($this->game->getGaveUp() == true) {
+            $html = <<<HTML
+        <p class="message"> $this->player2, you won!</p>
 
 HTML;
+        }
+        else {
+            $html = <<<HTML
+        <p class="message"> $this->player1, your turn!</p>
+
+HTML;
+        }
 
         return $html;
 
     }
+
 
     public function player1name(){
         $this->player1 = $this->game->getPlayer1Name();

@@ -18,6 +18,11 @@ class Controller
         $this->Steampunked->setPlayer2($post["player2"]);
         $this->Steampunked->setSize($post["gamesize"]);
 
+        if($post["Give Up"]){
+            var_dump($this->Steampunked);
+            $this->Steampunked->gaveUp();
+        }
+
 
     }
 
