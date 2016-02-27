@@ -14,7 +14,12 @@ class Player
     public function __construct($name)
     {
         $this->name = $name;
+
+        for ($i = 0; $i < 5; $i++) {
+            $this->selections[] = new Tile(Tile::PIPE);
+        }
     }
 
     private $name;
+    private $selections;
 }
