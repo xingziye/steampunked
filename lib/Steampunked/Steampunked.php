@@ -62,7 +62,31 @@ class Steampunked
         return $this->size;
     }
 
+    public function getPlayer1Name(){
+        return $this->player1name;
+    }
+
+    public function getPlayer2Name(){
+        return $this->player2name;
+    }
+
+
+    public function setPlayer1($name){
+        $this->player1name = $name;
+    }
+
+    public function setPlayer2($name){
+        $this->player2name = $name;
+    }
+
+    public function setSize($size){
+        $this->size = $size;
+    }
+
     private $size = 0;
     private $players = array();
     private $turn = 0;
+    private $player1name ="" ;
+    private $player2name ="" ;
+
 }

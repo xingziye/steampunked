@@ -13,7 +13,7 @@ session_start();
 
 define("STEAMPUNKED_SESSION", 'steampunked');
 
-// If there is a Wumpus session, use that. Otherwise, create one
+// If there is a session, use that. Otherwise, create one
 if(!isset($_SESSION[STEAMPUNKED_SESSION])) {
     $_SESSION[STEAMPUNKED_SESSION] = new Steampunked\Steampunked();
 
@@ -22,3 +22,4 @@ if(!isset($_SESSION[STEAMPUNKED_SESSION])) {
 }
 
 $steampunked = $_SESSION[STEAMPUNKED_SESSION];
+

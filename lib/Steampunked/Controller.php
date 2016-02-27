@@ -11,10 +11,16 @@ namespace Steampunked;
 
 class Controller
 {
-    public function __construct(Steampunked $Steampunked){
-        $this->Steampunked=$Steampunked;
-        $this->reset=true;
-}
+    public function __construct(Steampunked $Steampunked, $post){
+        $this->Steampunked = $Steampunked;
+
+        $this->Steampunked->setPlayer1($post["player1"]);
+        $this->Steampunked->setPlayer2($post["player2"]);
+        $this->Steampunked->setSize($post["gamesize"]);
+
+
+    }
+
     public function move($ndx)
     {
         if($ndx>0){
