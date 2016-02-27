@@ -67,3 +67,7 @@ fieldset{
     margin-right: auto;
     width: 500px;
 }
+div.win_p p{
+    font-size: 1.25em;
+    font-weight: lighter;
+}
