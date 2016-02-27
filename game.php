@@ -17,6 +17,8 @@ $view = new Steampunked\View($steampunked);
 
     <p class="message"><?php echo $view->player1name(); ?>, your turn!</p>
 
+<!--    --><?php //echo $view->currentPlayer(); ?>
+
     <?php echo $view->createRadioButtons(); ?>
 
     <?php echo $view->createOptionButtons(); ?>

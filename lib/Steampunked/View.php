@@ -34,12 +34,12 @@ class View
 HTML;
 
         ///loop for Number X Number grid
-        for ($row = 0; $row < $this->size(); $row++) {
+        for ($row = 0; $row < $this->size; $row++) {
             $this->html .= "<div class=\"row\">";
-            for ($col = 0; $col < $this->size(); $col++) {
-                if ($col == 0 and ($row == 0 or $row == $this->size()-2)) {
+            for ($col = 0; $col < $this->size; $col++) {
+                if ($col == 0 and ($row == 0 or $row == $this->size-1)) {
                     $this->html .= "<div class=\"cell\"><img src=\"images/valve-closed.png\"></div>";
-                } else if ($col == $this->size()-1 and ($row == 1 or $row == $this->size()-1)) {
+                } else if ($col == $this->size-1 and ($row == 1 or $row == $this->size-2)) {
                     $this->html .= "<div class=\"cell\"><img src=\"images/gauge-0.png\"></div>";
                 } else {
                     $this->html .= "<div class=\"cell\"><img src=\"\"></div>";
@@ -130,6 +130,18 @@ HTML;
         return $html;
     }
 
+    public function currentPlayer()
+    {
+
+        $html = <<<HTML
+        <p class="message"> $this->currentPlayer, your turn!</p>
+
+HTML;
+
+        return $html;
+
+    }
+
     public function player1name(){
         $this->player1 = $this->game->getPlayer1Name();
         $name = $this->player1;
@@ -142,14 +154,17 @@ HTML;
         return $name;
     }
 
-    public function size(){
+    public function getSize(){
         return $this->game->getSize();
     }
+
 
     private $game;
     private $player1 = "";
     private $player2 ="";
+    private $currentPlayer="Anth";
     private $size =0;
     private $html="";
+
 
 }

@@ -29,6 +29,8 @@ class Steampunked
         $this->players = array();
         $this->players[] = $player0;
         $this->players[] = $player1;
+        $this->player1name = $player0;
+        $this->player2name = $player1;
     }
 
     public function getPlayer($ndx)
