@@ -13,7 +13,7 @@
 
 <div class="screen">
     <p><img src="images/title.png"></p>
-    <form method="post" action="game.php">
+    <form method="post" action="game-post.php">
         <fieldset>
             <legend>Game Preferences</legend>
             <p>
