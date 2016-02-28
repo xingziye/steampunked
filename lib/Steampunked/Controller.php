@@ -13,6 +13,12 @@ class Controller
 {
     public function __construct(Steampunked $Steampunked, $post){
         $this->Steampunked=$Steampunked;
+
+        $this->Steampunked->setPlayer1($post["player1"]);
+        $this->Steampunked->setPlayer2($post["player2"]);
+        $this->Steampunked->setSize($post["gamesize"]);
+
+
         if(isset($post['add'])){
             $this->action='add';
             $this->addimage($post['add']);
@@ -96,4 +102,5 @@ class Controller
     private $image;
     private $Steampunked;
     private $action;
+    private $reset = false;
 }

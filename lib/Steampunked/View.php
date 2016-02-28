@@ -19,7 +19,7 @@ class View
         $this->game = $steampunked;
         $this->player1 = $this->game->getPlayer1Name();
         $this->player2 = $this->game->getPlayer2Name();
-        $this->size = $this->game->getSize();
+        $this->size = $this->game->getGridSize();
 
     }
 
@@ -28,22 +28,24 @@ class View
         $this->html = <<<HTML
         <div class="container">
     <p><img src="images/title.png"></p>
-    <form method="post" action="">
+    <form method="post" action="game-post.php">
             <div class="game">
 
 HTML;
 
+        $playSize = $this->size +2;
+
         ///loop for Number X Number grid
         for ($row = 0; $row < $this->size; $row++) {
             $this->html .= "<div class=\"row\">";
-            for ($col = 0; $col < $this->size; $col++) {
+            for ($col = 0; $col < $playSize; $col++) {
                 if ($col == 0 and ($row == 0 or $row == $this->size-1)) {
                     $this->html .= "<div class=\"cell\"><img src=\"images/valve-closed.png\"></div>";
                 }
-                else if(($row == 0 and $col == $this->size-1) or ($col == $this->size -1 and $row == $this->size-3)){
+                else if(($row == 0 and $col == $playSize-1) or ($col == $playSize -1 and $row == $this->size-3)){
                     $this->html .= "<div class=\"cell\"><img src=\"images/gauge-top-0.png\"></div>";
                 }
-                else if ($col == $this->size-1 and ($row == 1 or $row == $this->size-2)) {
+                else if ($col == $playSize-1 and ($row == 1 or $row == $this->size-2)) {
                     $this->html .= "<div class=\"cell\"><img src=\"images/gauge-0.png\"></div>";
                 } else {
                     $this->html .= "<div class=\"cell\"><img src=\"\"></div>";
@@ -136,19 +138,19 @@ HTML;
 
     public function currentPlayer()
     {
-
-        if ($this->game->getGaveUp() == true) {
-            $html = <<<HTML
-        <p class="message"> $this->player2, you won!</p>
-
-HTML;
-        }
-        else {
+//
+//        if ($this->game->getGaveUp() == true) {
+//            $html = <<<HTML
+//        <p class="message"> $this->player2, you won!</p>
+//
+//HTML;
+//        }
+//        else {
             $html = <<<HTML
         <p class="message"> $this->player1, your turn!</p>
 
 HTML;
-        }
+//        }
 
         return $html;
 
