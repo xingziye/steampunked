@@ -25,7 +25,6 @@ class Steampunked
 
     public function createGame($size, $player0, $player1)
     {
-        $this->size = $size;
         $this->pipes = array();
         for ($row = 0; $row < $size; $row++) {
             $this->pipes[] = array();
@@ -33,7 +32,6 @@ class Steampunked
                 $this->pipes[$row][] = null;
             }
         }
-
 
         $this->players = array();
         $this->players[] = $player0;
@@ -123,51 +121,9 @@ class Steampunked
         return count($this->pipes);
     }
 
-    public function getPlayer1Name(){
-        return $this->player1name;
-    }
-
-    public function getPlayer2Name(){
-        return $this->player2name;
-    }
-
-
-    public function setPlayer1($name){
-        $this->player1name = $name;
-    }
-
-    public function setPlayer2($name){
-        $this->player2name = $name;
-    }
-
-    public function setSize($size){
-        $this->size = $size;
-    }
-
-    public function getGridSize()
-    {
-        return $this->size;
-
-    }
-
-    public function gaveUp(){
-
-        $this->gaveup = true;
-    }
-
-    public function getGaveUp(){
-        return $this->gaveup;
-
-    }
-
     private $pipes = array();
     private $valves = array();
     private $gauges = array();
     private $players = array();
     private $turn = 0;
-
-    private $player1name ="" ;
-    private $player2name ="" ;
-    private $gaveup = false;
-    private $size =0;
 }
