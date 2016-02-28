@@ -21,46 +21,49 @@ class View
 
     public function createGrid(){
 
-        $this->html = <<<HTML
+        $html = <<<HTML
         <div class="container">
     <p><img src="images/title.png"></p>
     <form method="post" action="game-post.php">
             <div class="game">
-
 HTML;
 
-        $playSize = $this->size +2;
-
         ///loop for Number X Number grid
-        for ($row = 0; $row < $this->size; $row++) {
-            $this->html .= "<div class=\"row\">";
-            for ($col = 0; $col < $playSize; $col++) {
-                if ($col == 0 and ($row == 0 or $row == $this->size-1)) {
-                    $this->html .= "<div class=\"cell\"><img src=\"images/valve-closed.png\"></div>";
+        $size = $this->game->getSize();
+        for ($row = 0; $row < $size; $row++) {
+            $html .= "<div class=\"row\">";
+            for ($col = 0; $col < $size + 2; $col++) {
+                if ($col == 0 and ($row == 0 or $row == $size-1)) {
+                    $html .= "<div class=\"cell\"><img src=\"images/valve-closed.png\"></div>";
                 }
-                else if(($row == 0 and $col == $playSize-1) or ($col == $playSize -1 and $row == $this->size-3)){
-                    $this->html .= "<div class=\"cell\"><img src=\"images/gauge-top-0.png\"></div>";
+                else if(($row == 0 and $col == $size-1) or ($col == $size -1 and $row == $size-3)){
+                    $html .= "<div class=\"cell\"><img src=\"images/gauge-top-0.png\"></div>";
                 }
-                else if ($col == $playSize-1 and ($row == 1 or $row == $this->size-2)) {
-                    $this->html .= "<div class=\"cell\"><img src=\"images/gauge-0.png\"></div>";
+                else if ($col == $size-1 and ($row == 1 or $row == $size-2)) {
+                    $html .= "<div class=\"cell\"><img src=\"images/gauge-0.png\"></div>";
                 } else {
-                    $this->html .= "<div class=\"cell\"><img src=\"\"></div>";
+                    $html .= "<div class=\"cell\"><img src=\"\"></div>";
                 }
             }
-            $this->html .= "</div>";
+            $html .= "</div>";
 
         }
 
-        $this->html .= "</div>";
+        $html .= "</div>";
 
-        return $this->html;
+        return $html;
     }
 
-
+    public function presentTurn() {
+        $turn = $this->game->getTurn();
+        $name = $this->game->getPlayer($turn)->getName();
+        $html = "<p class=\"message\">$name, your turn!</p>";
+        return $html;
+    }
 
     public function createRadioButtons(){
         $html= <<<HTML
-                <p class="pieces">
+        <p class="pieces">
             <label for="radio1"><img src="images/valve-closed.png" /></label>
             <input type="radio" name="radio1" id="radio1"
             <label for="radio2"><img src="images/straight-h.png" /></label>
@@ -77,14 +80,13 @@ HTML;
         return $html;
     }
 
-
     public function createOptionButtons(){
         $html = <<<HTML
-                <div class="options">
+        <div class="options">
             <p class="option"><input type="button" name="rotate" value="Rotate"></p>
             <p class="option"><input type="button" name="discard" value="Discard"></p>
             <p class="option"><input type="button" name="open" value="Open Valve"></p>
-            <p class="option"><input type="button" name="giveup" value="Give Up"></p>
+            <p class="option"><input type="submit" name="giveup" value="Give Up"></p>
         </div>
         </form>
         </div>

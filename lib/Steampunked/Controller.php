@@ -11,13 +11,14 @@ namespace Steampunked;
 
 class Controller
 {
-    public function __construct(Steampunked $Steampunked, $post){
-        $this->Steampunked=$Steampunked;
+    public function __construct(Steampunked $steampunked, $post) {
+        $this->steampunked = $steampunked;
 
-        $this->Steampunked->setPlayer1($post["player1"]);
-        $this->Steampunked->setPlayer2($post["player2"]);
-        $this->Steampunked->setSize($post["gamesize"]);
-
+        if (isset($post['player1']) and isset($post['player2']) and isset($post['gamesize'])) {
+            $player0 = new Player(strip_tags($post['player1']));
+            $player1 = new Player(strip_tags($post['player2']));
+            $this->steampunked->createGame(strip_tags($post['gamesize']), $player0, $player1);
+        }
 
         if(isset($post['add'])){
             $this->action='add';
@@ -32,11 +33,10 @@ class Controller
             $this->discard($post['discard']);
         }
         else if(isset($post['giveup'])){
-            $this->action='giveup';
-            $this->giveup($post['giveup']);
+            $this->page = 'index.php';
         }
-
     }
+
     public function addimage($image,$row,$colum){
         $this->action='add';
         $this->move();
@@ -47,10 +47,6 @@ class Controller
     }
     public function discard(){
         $this->action='discard';
-        $this->move();
-    }
-    public function giveup($image,$row,$colum){
-        $this->action='giveup';
         $this->move();
     }
     public function move()
@@ -98,9 +94,9 @@ class Controller
     {
         return $this->image;
     }
-    private $page = 'Steampunked.php';     // The next page we will go to
+    private $page = 'game.php';     // The next page we will go to
     private $image;
-    private $Steampunked;
+    private $steampunked;
     private $action;
     private $reset = false;
 }
