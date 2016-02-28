@@ -16,8 +16,13 @@ class Player
         $this->name = $name;
 
         for ($i = 0; $i < 5; $i++) {
-            $this->selections[] = new Tile(Tile::PIPE);
+            $this->selections[] = new Tile(Tile::PIPE, $this);
         }
+    }
+
+    public function getName()
+    {
+        return $this->name;
     }
 
     private $name;

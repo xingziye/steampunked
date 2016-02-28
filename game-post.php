@@ -1,5 +1,6 @@
 <?php
 require __DIR__ . '/lib/game.inc.php';
+phpinfo();
 $controller = new Steampunked\Controller($steampunked, $_POST);
 
 if($controller->isReset()) {
@@ -7,5 +8,5 @@ if($controller->isReset()) {
 
 }
 
-header("location: game.php");
+//header("location: game.php");
 exit;

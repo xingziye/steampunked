@@ -17,10 +17,6 @@ class View
      */
     public function __construct(Steampunked $steampunked) {
         $this->game = $steampunked;
-        $this->player1 = $this->game->getPlayer1Name();
-        $this->player2 = $this->game->getPlayer2Name();
-        $this->size = $this->game->getGridSize();
-
     }
 
     public function createGrid(){
@@ -147,7 +143,7 @@ HTML;
 //        }
 //        else {
             $html = <<<HTML
-        <p class="message"> $this->player1, your turn!</p>
+        <p class="message"> $this->game->getPlayer($this->game->getTurn())->getName(), your turn!</p>
 
 HTML;
 //        }
@@ -156,30 +152,5 @@ HTML;
 
     }
 
-
-    public function player1name(){
-        $this->player1 = $this->game->getPlayer1Name();
-        $name = $this->player1;
-        return $name;
-    }
-
-    public function player2name(){
-        $this->player2 = $this->game->getPlayer2Name();
-        $name = $this->player2;
-        return $name;
-    }
-
-    public function getSize(){
-        return $this->game->getSize();
-    }
-
-
     private $game;
-    private $player1 = "";
-    private $player2 ="";
-    private $currentPlayer="Anth";
-    private $size =0;
-    private $html="";
-
-
 }
