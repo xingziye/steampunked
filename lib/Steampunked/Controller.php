@@ -49,7 +49,7 @@ class Controller
             $this->steampunked->nextTurn();
         }
         else if(isset($post['giveup'])){
-            $this->page = 'index.php';
+            $this->page = 'game.php';
         }
     }
 
