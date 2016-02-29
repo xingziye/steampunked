@@ -9,8 +9,6 @@
 namespace Steampunked;
 
 
-use MongoDB\Driver\Exception\ConnectionTimeoutException;
-
 class Steampunked
 {
     const WIN = 0;
