@@ -191,9 +191,15 @@ class Steampunked
         return count($this->pipes);
     }
 
+    public function isContinued()
+    {
+        return $this->continued;
+    }
+
     private $pipes = array();
     private $valves = array();
     private $gauges = array();
     private $players = array();
     private $turn = 0;
+    private $continued = true;
 }
