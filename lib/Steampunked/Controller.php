@@ -15,88 +15,55 @@ class Controller
         $this->steampunked = $steampunked;
 
         if (isset($post['player1']) and isset($post['player2']) and isset($post['gamesize'])) {
-            $player0 = new Player(strip_tags($post['player1']));
-            $player1 = new Player(strip_tags($post['player2']));
-            $this->steampunked->createGame(strip_tags($post['gamesize']), $player0, $player1);
+            $player0 = new Player(strip_tags($post['player1']), 0);
+            $player1 = new Player(strip_tags($post['player2']), 1);
+            $this->steampunked->createGame($post['gamesize'], $player0, $player1);
         }
 
-        if(isset($post['add'])){
-            $this->action='add';
-            $this->addimage($post['add']);
+        if(isset($post['leak']) and isset($post['radio'])){
+            $split = explode(',', strip_tags($post['leak']));
+            $row = intval($split[0]);
+            $col = intval($split[1]);
+
+            $turn = $this->steampunked->getTurn();
+            $ndx = intval($post['radio']);
+            $pipe = clone $this->steampunked->getPlayer($turn)->getSelections()[$ndx];
+            $result = $this->steampunked->addPipe($pipe, $row, $col);
+            var_dump($result);
+            if ($result == Steampunked::SUCCESS) {
+                $pipe = new Tile(Tile::PIPE, $turn);
+                $this->steampunked->getPlayer($turn)->setSelection($pipe, $ndx);
+                $this->steampunked->nextTurn();
+            }
         }
-        else if(isset($post['rotate'])){
-            $this->action='rotate';
-            $this->rotate($post['rotate']);
+        else if(isset($post['rotate']) and isset($post['radio'])){
+            $turn = $this->steampunked->getTurn();
+            $ndx = intval($post['radio']);
+            $this->steampunked->getPlayer($turn)->getSelections()[$ndx]->rotate();
         }
-        else if(isset($post['discard'])){
-            $this->action='discard';
-            $this->discard($post['discard']);
+        else if(isset($post['discard']) and isset($post['radio'])){
+            $turn = $this->steampunked->getTurn();
+            $ndx = intval($post['radio']);
+            $pipe = new Tile(Tile::PIPE, $turn);
+            $this->steampunked->getPlayer($turn)->setSelection($pipe, $ndx);
+            $this->steampunked->nextTurn();
         }
         else if(isset($post['giveup'])){
             $this->page = 'index.php';
         }
     }
 
-    public function addimage($image,$row,$colum){
-        $this->action='add';
-        $this->move();
-    }
-    public function rotate($image){
-        $this->action='rotate';
-        $this->move();
-    }
-    public function discard(){
-        $this->action='discard';
-        $this->move();
-    }
-    public function move()
+    public function isReset()
     {
-        if($this->action='giveup'){
-            $this->action=null;
-            $this->image=null;
-            $this->page='win.php';
-            //make it win no matter win or lose
-        }
-        else if($this->action == 'add')
-        {
-            //check if adding piece wins
-            //if(piece placed wins game){$this->page = win.php;}
-            //change players
-            $this->page = 'Steampunked.php';
-        }
-
-        else if($this->action == 'rotate')
-        {
-            $this->page = 'Steampunked.php';
-        }
-
-        else if($this->action == 'discard')
-        {
-            $this->piece = null;
-            //change players
-            $this->page = 'Steampunked.php';
-        }
-
-    }
-
-    public function getPage(){
-        return $this->page;
-    }
-    public function isReset(){
         return $this->reset;
     }
-    public function getAction()
+
+    public function getPage()
     {
-        return $this->action;
+        return $this->page;
     }
 
-    public function getImage()
-    {
-        return $this->image;
-    }
     private $page = 'game.php';     // The next page we will go to
-    private $image;
     private $steampunked;
-    private $action;
     private $reset = false;
 }

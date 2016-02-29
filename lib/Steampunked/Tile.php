@@ -20,15 +20,13 @@ class Tile
     const GAUGE_TOP0 = 6;
     const GAUGE_TOP190 = 7;
 
-    public function __construct($type, $player, $seed = null)
+    public function __construct($type, $playerID, $seed = null)
     {
         $this->type = $type;
+        $this->id = $playerID;
 
         if ($type == Tile::PIPE) {
-            $this->open["N"] = (bool)rand(0,1);
-            $this->open["E"] = (bool)rand(0,1);
-            $this->open["S"] = (bool)rand(0,1);
-            $this->open["W"] = (bool)rand(0,1);
+            $this->randOpen();
         } elseif ($type == Tile::VALVE_CLOSE) {
             $this->open = array("N"=>false, "E"=>true, "S"=>false, "W"=>false);
         }
@@ -91,9 +89,17 @@ class Tile
         $this->flag = $flag;
     }
 
+    /**
+     * @param Tile
+     * @param string
+     */
     public function setNeighbor($neighbor, $direction)
     {
         $this->neighbors[$direction] = $neighbor;
+        if ($this->type == Tile::LEAK) {
+            $this->open = array("N"=>false, "E"=>false, "S"=>false, "W"=>false);
+            $this->setOpenDirection($direction);
+        }
     }
 
     public function neighbor($direction)
@@ -108,12 +114,38 @@ class Tile
         return $this->open;
     }
 
+    /**
+     * @return int
+     */
     public function getType()
     {
         return $this->type;
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setOpenDirection($direction)
+    {
+        $this->open[$direction] = true;
+    }
+
+    private function randOpen() {
+        $this->open["N"] = (bool)rand(0,1);
+        $this->open["E"] = (bool)rand(0,1);
+        $this->open["S"] = (bool)rand(0,1);
+        $this->open["W"] = (bool)rand(0,1);
+        if ($this->open() == array("N"=>true, "E"=>true, "S"=>true, "W"=>true)) {
+            $this->randOpen();
+        } elseif ($this->open() == array("N"=>false, "E"=>false, "S"=>false, "W"=>false)) {
+            $this->randOpen();
+        }
+    }
+
     private $type;
+    private $id;
     private $flag = false;
     private $open = array();
     private $neighbors = array();

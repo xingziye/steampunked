@@ -71,3 +71,35 @@ div.win_p p{
     font-size: 1.25em;
     font-weight: lighter;
 }
+
+div.cell input {
+    border: 0;
+    padding: 0;
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    text-indent: -999px;
+    font-size: 0;
+    line-height: 0;
+    display: block;
+}
+
+div.cell input:hover {
+    background-color: #C3FDB8;
+}
+
+div.cell input.north {
+    background-image: url("images/leak-n.png");
+}
+
+div.cell input.east {
+    background-image: url("images/leak-e.png");
+}
+
+div.cell input.south {
+    background-image: url("images/leak-s.png");
+}
+
+div.cell input.west {
+    background-image: url("images/leak-w.png");
+}
