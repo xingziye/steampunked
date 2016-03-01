@@ -100,15 +100,15 @@ HTML;
             $html = <<<HTML
         <p class="pieces">
             <label for="radio1"><img src=$images[0] /></label>
-            <input type="radio" name="radio" id="radio1" value="0">
+            <input type="radio" name="radio" id="radio1" value="0" >
             <label for="radio2"><img src=$images[1] /></label>
-            <input type="radio" name="radio" id="radio2" value="1">
+            <input type="radio" name="radio" id="radio2" value="1" >
             <label for="radio3"><img src=$images[2] /></label>
-            <input type="radio" name="radio" id="radio3" value="2">
+            <input type="radio" name="radio" id="radio3" value="2" >
             <label for="radio4"><img src=$images[3] /></label>
-            <input type="radio" name="radio" id="radio4" value="3">
+            <input type="radio" name="radio" id="radio4" value="3" >
             <label for="radio5"><img src=$images[4] /></label>
-            <input type="radio" name="radio" id="radio5" value="4">
+            <input type="radio" name="radio" id="radio5" value="4" >
         </>
 HTML;
         }
@@ -229,7 +229,7 @@ HTML;
             <br>
             <p>
                 <label for="6x6">6x6</label>
-                <input type="radio" name="gamesize" id="6x6" value="6" checked="checked>
+                <input type="radio" name="gamesize" id="6x6" value="6" checked="checked" >
                 <label for="10x10">10x10</label>
                 <input type="radio" name="gamesize" id="10x10" value="10">
                 <label for="20x20">20x20</label>
