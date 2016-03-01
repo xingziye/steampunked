@@ -23,7 +23,7 @@
             <br>
             <p>
                 <label for="6x6">6x6</label>
-                <input type="radio" name="gamesize" id="6x6" value="6">
+                <input type="radio" name="gamesize" id="6x6" value="6" checked="checked>
                 <label for="10x10">10x10</label>
                 <input type="radio" name="gamesize" id="10x10" value="10">
                 <label for="20x20">20x20</label>

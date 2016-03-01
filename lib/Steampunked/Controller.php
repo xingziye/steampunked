@@ -29,12 +29,17 @@ class Controller
             $ndx = intval($post['radio']);
             $pipe = clone $this->steampunked->getPlayer($turn)->getSelections()[$ndx];
             $result = $this->steampunked->addPipe($pipe, $row, $col);
-            var_dump($result);
+//            var_dump($result);
             if ($result == Steampunked::SUCCESS) {
                 $pipe = new Tile(Tile::PIPE, $turn);
                 $this->steampunked->getPlayer($turn)->setSelection($pipe, $ndx);
                 $this->steampunked->nextTurn();
             }
+            else if ($result == Steampunked::LOSE) {
+                $this->steampunked->setContinued(false);
+                $this->steampunked->nextTurn();
+            }
+
         }
         else if(isset($post['rotate']) and isset($post['radio'])){
             $turn = $this->steampunked->getTurn();
@@ -47,6 +52,10 @@ class Controller
             $pipe = new Tile(Tile::PIPE, $turn);
             $this->steampunked->getPlayer($turn)->setSelection($pipe, $ndx);
             $this->steampunked->nextTurn();
+        }
+        else if(isset($post['open'])){
+            $this->page = 'game.php';
+
         }
         else if(isset($post['giveup'])){
             $this->page = 'game.php';
