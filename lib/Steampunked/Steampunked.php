@@ -30,6 +30,7 @@ class Steampunked
 
     public function createGame($size, $player0, $player1)
     {
+
         $this->pipes = array();
         for ($row = 0; $row < $size; $row++) {
             $this->pipes[] = array();
