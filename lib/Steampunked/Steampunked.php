@@ -110,26 +110,62 @@ class Steampunked
             foreach(array("N", "W", "S", "E") as $direction) {
                 if ($leak->neighbor($direction)) {
                     $pipe->setNeighbor($leak->neighbor($direction), $direction);
-                } elseif ($open[$direction]) {
+                } elseif ($open[$direction]) { // check edge condition
                     if (($direction == "N" and $row == 0)
                     or ($direction == "W" and $col ==0)
                     or ($direction == "S" and $row == $this->getSize() - 1)
                     or ($direction == "E" and $col == $this->getSize() - 1)) {
-                        return Steampunked::LOSE;
+                        return Steampunked::FAILURE;
                     }
-                    $newLeak = new Tile(Tile::LEAK, $this->getTurn());
+                    // add leak tile
                     if ($direction == "N") {
-                        $newLeak->setNeighbor($pipe, "S");
-                        $this->pipes[$row-1][$col] = $newLeak;
+                        if ($this->pipes[$row-1][$col] === null) {
+                            $newLeak = new Tile(Tile::LEAK, $this->getTurn());
+                            $newLeak->setNeighbor($pipe, "S");
+                            $this->pipes[$row-1][$col] = $newLeak;
+                        } else {
+                            if ($this->pipes[$row-1][$col]->getType() == Tile::LEAK) {
+                                $this->pipes[$row-1][$col]->setNeighbor($pipe, "S");
+                            } else {
+                                return Steampunked::FAILURE;
+                            }
+                        }
                     } elseif ($direction == "W") {
-                        $newLeak->setNeighbor($pipe, "E");
-                        $this->pipes[$row][$col-1] = $newLeak;
+                        if ($this->pipes[$row][$col-1] === null) {
+                            $newLeak = new Tile(Tile::LEAK, $this->getTurn());
+                            $newLeak->setNeighbor($pipe, "E");
+                            $this->pipes[$row][$col-1] = $newLeak;
+                        } else {
+                            if ($this->pipes[$row][$col-1]->getType() == Tile::LEAK) {
+                                $this->pipes[$row][$col-1]->setNeighbor($pipe, "E");
+                            } else {
+                                return Steampunked::FAILURE;
+                            }
+                        }
                     } elseif ($direction == "S") {
-                        $newLeak->setNeighbor($pipe, "N");
-                        $this->pipes[$row+1][$col] = $newLeak;
+                        if ($this->pipes[$row+1][$col] === null) {
+                            $newLeak = new Tile(Tile::LEAK, $this->getTurn());
+                            $newLeak->setNeighbor($pipe, "N");
+                            $this->pipes[$row+1][$col] = $newLeak;
+                        } else {
+                            if ($this->pipes[$row+1][$col]->getType() == Tile::LEAK) {
+                                $this->pipes[$row+1][$col]->setNeighbor($pipe, "N");
+                            } else {
+                                return Steampunked::FAILURE;
+                            }
+                        }
                     } else {
-                        $newLeak->setNeighbor($pipe, "W");
-                        $this->pipes[$row][$col+1] = $newLeak;
+                        if ($this->pipes[$row][$col+1] === null) {
+                            $newLeak = new Tile(Tile::LEAK, $this->getTurn());
+                            $newLeak->setNeighbor($pipe, "W");
+                            $this->pipes[$row][$col+1] = $newLeak;
+                        } else {
+                            if ($this->pipes[$row][$col+1]->getType() == Tile::LEAK) {
+                                $this->pipes[$row][$col+1]->setNeighbor($pipe, "W");
+                            } else {
+                                return Steampunked::FAILURE;
+                            }
+                        }
                     }
                 }
             }
