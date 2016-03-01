@@ -196,6 +196,10 @@ class Steampunked
         return $this->continued;
     }
 
+    public function setContinued($bool){
+        $this->continued = $bool;
+    }
+
     private $pipes = array();
     private $valves = array();
     private $gauges = array();

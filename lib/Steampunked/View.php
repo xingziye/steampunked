@@ -76,7 +76,13 @@ HTML;
     public function presentTurn() {
         $turn = $this->game->getTurn();
         $name = $this->game->getPlayer($turn)->getName();
-        $html = "<p class=\"message\">$name, your turn!</p>";
+        if($this->game->isContinued() == false){
+            $html = "<p class=\"message\">$name, your win!</p>";
+        }
+        else{
+            $html = "<p class=\"message\">$name, your turn!</p>";
+        }
+
         return $html;
     }
 
@@ -87,7 +93,11 @@ HTML;
         foreach($selections as $pipe) {
             $images[] = $this->getImage($pipe);
         }
-        $html= <<<HTML
+
+        $html ="";
+
+        if($this->game->isContinued() == true) {
+            $html = <<<HTML
         <p class="pieces">
             <label for="radio1"><img src=$images[0] /></label>
             <input type="radio" name="radio" id="radio1" value="0">
@@ -101,12 +111,24 @@ HTML;
             <input type="radio" name="radio" id="radio5" value="4">
         </p>
 HTML;
+        }
 
         return $html;
     }
 
     public function createOptionButtons(){
-        $html = <<<HTML
+        if($this->game->isContinued() == false){
+            $html = <<<HTML
+        <div class="options">
+            <p class="option"><input type="submit" name="newgame" value="New Game"></p>
+        </div>
+        </form>
+        </div>
+
+HTML;
+        }
+        else{
+            $html = <<<HTML
         <div class="options">
             <p class="option"><input type="submit" name="rotate" value="Rotate"></p>
             <p class="option"><input type="submit" name="discard" value="Discard"></p>
@@ -117,6 +139,7 @@ HTML;
         </div>
 
 HTML;
+        }
         return $html;
     }
 

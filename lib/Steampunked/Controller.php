@@ -50,6 +50,13 @@ class Controller
         }
         else if(isset($post['giveup'])){
             $this->page = 'game.php';
+            $this->steampunked->nextTurn();
+            $this->steampunked->setContinued(false);
+        }
+        else if(isset($post['newgame'])){
+            $this->page = 'index.php';
+            $this->steampunked->setContinued(true);
+            $this->reset = true;
         }
     }
 
