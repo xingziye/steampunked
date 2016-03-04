@@ -30,7 +30,8 @@ class Steampunked
 
     public function createGame($size, $player0, $player1)
     {
-
+        $this->continued = true;
+        $this->turn = 0;
         $this->pipes = array();
         for ($row = 0; $row < $size; $row++) {
             $this->pipes[] = array();
@@ -74,6 +75,30 @@ class Steampunked
         }
     }
 
+    public function openValve($player) {
+        $size = $this->getSize();
+        $valves= $this->getValves();
+        $gauges = $this->getGauges();
+        for ($row = 0; $row < $size; $row++) {
+            if ($valves[$row] !== null and $valves[$row]->getId() == $player) {
+                $valves[$row]->setType(Tile::VALVE_OPEN);
+            }
+        }
+        for ($row = 0; $row < $size; $row++) {
+            if ($gauges[$row] !== null) {
+                if ($gauges[$row]->getId() == $player and $gauges[$row]->getType() == Tile::GAUGE0) {
+                    if ($gauges[$row]->indicateLeaks()) {
+                        return true;
+                    } else {
+                        $gauges[$row]->setType(Tile::GAUGE190);
+                        $gauges[$row-1]->setType(Tile::GAUGE_TOP190);
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+
     public function check($pipe, $row, $col) {
         // Check the open matches leak's neighbors
         $open = $pipe->open();
@@ -108,71 +133,72 @@ class Steampunked
             $leak = $this->pipes[$row][$col];
             $this->setPipe($pipe, $row, $col);
             $open = $pipe->open();
+            $size = $this->getSize();
             foreach(array("N", "W", "S", "E") as $direction) {
+                // connect valve to pipe
+                if ($col == 0 and ($row == $size/2 - 3 or $row == $size/2 + 2)) {
+                    $this->valves[$row]->setNeighbor($this->pipes[$row][$col], "E");
+                }
                 if ($leak->neighbor($direction)) {
                     $pipe->setNeighbor($leak->neighbor($direction), $direction);
-                } elseif ($open[$direction]) { // check edge condition
+                    $leak->neighbor($direction)->setNeighbor($pipe, $this->opposite($direction));
+                } elseif ($open[$direction]) {
+                    // check pipe which connects to gauge
+                    if ($direction == "E" and $col == $size - 1) {
+                        if ($row == $size/2 - 2) {
+                            $pipe->setNeighbor($this->gauges[$size/2 - 2], "E");
+                            $this->gauges[$size/2 - 2]->setNeighbor($this->pipes[$row][$col], "W");
+                        } elseif($row == $size/2 + 1) {
+                            $pipe->setNeighbor($this->gauges[$size/2 + 1], "E");
+                            $this->gauges[$size/2 + 1]->setNeighbor($this->pipes[$row][$col], "W");
+                        }
+                        else {
+                            continue;
+                        }
+                    }
+                    // check edge condition
                     if (($direction == "N" and $row == 0)
                     or ($direction == "W" and $col ==0)
-                    or ($direction == "S" and $row == $this->getSize() - 1)
-                    or ($direction == "E" and $col == $this->getSize() - 1)) {
-                        return Steampunked::FAILURE;
+                    or ($direction == "S" and $row == $size - 1)) {
+                        continue;
                     }
                     // add leak tile
-                    if ($direction == "N") {
-                        if ($this->pipes[$row-1][$col] === null) {
-                            $newLeak = new Tile(Tile::LEAK, $this->getTurn());
-                            $newLeak->setNeighbor($pipe, "S");
-                            $this->pipes[$row-1][$col] = $newLeak;
-                        } else {
-                            if ($this->pipes[$row-1][$col]->getType() == Tile::LEAK) {
-                                $this->pipes[$row-1][$col]->setNeighbor($pipe, "S");
-                            } else {
-                                return Steampunked::FAILURE;
-                            }
-                        }
-                    } elseif ($direction == "W") {
-                        if ($this->pipes[$row][$col-1] === null) {
-                            $newLeak = new Tile(Tile::LEAK, $this->getTurn());
-                            $newLeak->setNeighbor($pipe, "E");
-                            $this->pipes[$row][$col-1] = $newLeak;
-                        } else {
-                            if ($this->pipes[$row][$col-1]->getType() == Tile::LEAK) {
-                                $this->pipes[$row][$col-1]->setNeighbor($pipe, "E");
-                            } else {
-                                return Steampunked::FAILURE;
-                            }
-                        }
-                    } elseif ($direction == "S") {
-                        if ($this->pipes[$row+1][$col] === null) {
-                            $newLeak = new Tile(Tile::LEAK, $this->getTurn());
-                            $newLeak->setNeighbor($pipe, "N");
-                            $this->pipes[$row+1][$col] = $newLeak;
-                        } else {
-                            if ($this->pipes[$row+1][$col]->getType() == Tile::LEAK) {
-                                $this->pipes[$row+1][$col]->setNeighbor($pipe, "N");
-                            } else {
-                                return Steampunked::FAILURE;
-                            }
-                        }
-                    } else {
-                        if ($this->pipes[$row][$col+1] === null) {
-                            $newLeak = new Tile(Tile::LEAK, $this->getTurn());
-                            $newLeak->setNeighbor($pipe, "W");
-                            $this->pipes[$row][$col+1] = $newLeak;
-                        } else {
-                            if ($this->pipes[$row][$col+1]->getType() == Tile::LEAK) {
-                                $this->pipes[$row][$col+1]->setNeighbor($pipe, "W");
-                            } else {
-                                return Steampunked::FAILURE;
-                            }
-                        }
-                    }
+                    $this->addLeak($row, $col, $direction);
                 }
             }
             return Steampunked::SUCCESS;
         }
         return Steampunked::FAILURE;
+    }
+
+    private function addLeak($row, $col, $direction) {
+        $leakRow = $row;
+        $leakCol = $col;
+        switch($direction) {
+            case "N":
+                $leakRow--;
+                break;
+            case "E":
+                $leakCol++;
+                break;
+            case "S":
+                $leakRow++;
+                break;
+            case "W":
+                $leakCol--;
+                break;
+            default:
+                return;
+        }
+        if ($this->pipes[$leakRow][$leakCol] === null) {
+            $newLeak = new Tile(Tile::LEAK, $this->getTurn());
+            $newLeak->setNeighbor($this->pipes[$row][$col], $this->opposite($direction));
+            $this->pipes[$leakRow][$leakCol] = $newLeak;
+        } else {
+            if ($this->pipes[$leakRow][$leakCol]->getType() == Tile::LEAK) {
+                $this->pipes[$leakRow][$leakCol]->setNeighbor($this->pipes[$row][$col], $this->opposite($direction));
+            }
+        }
     }
 
     private function setPipe($pipe, $row, $col) {
@@ -237,6 +263,24 @@ class Steampunked
         $this->continued = $bool;
     }
 
+    public function opposite($direction) {
+        switch($direction) {
+            case "N":
+                return "S";
+                break;
+            case "E":
+                return "W";
+                break;
+            case "S":
+                return "N";
+                break;
+            case "W":
+                return "E";
+                break;
+            default:
+                return null;
+        }
+    }
 
     private $pipes = array();
     private $valves = array();

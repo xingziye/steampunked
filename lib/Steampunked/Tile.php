@@ -29,6 +29,8 @@ class Tile
             $this->randOpen();
         } elseif ($type == Tile::VALVE_CLOSE) {
             $this->open = array("N"=>false, "E"=>true, "S"=>false, "W"=>false);
+        } elseif ($type == Tile::GAUGE0) {
+            $this->open = array("N"=>false, "E"=>false, "S"=>false, "W"=>true);
         }
     }
 
@@ -48,7 +50,7 @@ class Tile
 
         if($this->flag) {
             // Already visited
-            return array();
+            return false;
         }
 
         $this->flag = true;
@@ -60,16 +62,16 @@ class Tile
                 $n = $this->neighbor($direction);
                 if($n === null) {
                     // We have a leak in this direction...
-
-
-
+                    return true;
                 } else {
                     // Recurse
-                    $n->indicateLeaks();
+                    if ($n->indicateLeaks()) {
+                        return true;
+                    }
                 }
-
             }
         }
+        return false;
 
     }
 
@@ -109,6 +111,11 @@ class Tile
         }
     }
 
+    public function getNeighbors()
+    {
+        return $this->neighbors;
+    }
+
     public function open()
     {
         return $this->open;
@@ -120,6 +127,11 @@ class Tile
     public function getType()
     {
         return $this->type;
+    }
+
+    public function setType($type)
+    {
+        $this->type = $type;
     }
 
     public function getId()
