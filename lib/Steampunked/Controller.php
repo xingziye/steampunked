@@ -38,7 +38,6 @@ class Controller
                 $this->steampunked->setContinued(false);
                 $this->steampunked->nextTurn();
             }
-
         }
         else if(isset($post['rotate']) and isset($post['radio'])){
             $turn = $this->steampunked->getTurn();
@@ -62,12 +61,11 @@ class Controller
             }
         }
         else if(isset($post['giveup'])){
-            $this->page = 'game.php';
             $this->steampunked->nextTurn();
             $this->steampunked->setContinued(false);
         }
         else if(isset($post['newgame'])){
-            $this->page = 'index.php';
+            $this->page = './';
             $this->steampunked->setContinued(true);
             $this->reset = true;
         }

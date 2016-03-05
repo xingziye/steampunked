@@ -144,6 +144,10 @@ class Tile
         $this->open[$direction] = true;
     }
 
+    public function setOpen($direction, $boolean) {
+        $this->open[$direction] = $boolean;
+    }
+
     private function randOpen() {
         $this->open["N"] = (bool)rand(0,1);
         $this->open["E"] = (bool)rand(0,1);
